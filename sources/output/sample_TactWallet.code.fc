@@ -1,0 +1,203 @@
+#pragma version =0.4.3;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "sample_TactWallet.headers.fc";
+#include "sample_TactWallet.stdlib.fc";
+#include "sample_TactWallet.constants.fc";
+#include "sample_TactWallet.storage.fc";
+
+;;
+;; Contract TactWallet functions
+;;
+
+(int, int, slice) $TactWallet$_contract_init(int $publicKey, slice $admin) impure inline_ref {
+    var (($self'seqno, $self'publicKey, $self'admin)) = (0, null(), null());
+    $self'publicKey = $publicKey;
+    $self'admin = $admin;
+    return ($self'seqno, $self'publicKey, $self'admin);
+}
+
+((int, int, slice), int) $TactWallet$_fun_seqno((int, int, slice) $self) impure inline_ref {
+    var (($self'seqno, $self'publicKey, $self'admin)) = $self;
+    return (($self'seqno, $self'publicKey, $self'admin), $self'seqno);
+}
+
+((int, int, slice), int) $TactWallet$_fun_get_public_key((int, int, slice) $self) impure inline_ref {
+    var (($self'seqno, $self'publicKey, $self'admin)) = $self;
+    return (($self'seqno, $self'publicKey, $self'admin), $self'publicKey);
+}
+
+;;
+;; Receivers of a Contract TactWallet
+;;
+
+(((int, int, slice)), ()) %$TactWallet$_internal_empty((int, int, slice) $self) impure inline {
+    var ($self'seqno, $self'publicKey, $self'admin) = $self;
+    return (($self'seqno, $self'publicKey, $self'admin), ());
+}
+
+((int, int, slice), ()) $TactWallet$_internal_any_text((int, int, slice) $self, slice $str) impure inline {
+    var ($self'seqno, $self'publicKey, $self'admin) = $self;
+    $global_send($SendParameters$_constructor_to_value_mode_bounce($self'admin, 0, (64 + 2), false));
+    return (($self'seqno, $self'publicKey, $self'admin), ());
+}
+
+((int, int, slice), ()) $TactWallet$_internal_any((int, int, slice) $self, slice $slice) impure inline {
+    var ($self'seqno, $self'publicKey, $self'admin) = $self;
+    $global_send($SendParameters$_constructor_to_value_mode_bounce($self'admin, 0, (64 + 2), false));
+    return (($self'seqno, $self'publicKey, $self'admin), ());
+}
+
+(((int, int, slice)), ()) $TactWallet$_external_binary_ExtMessage((int, int, slice) $self, (slice, int, int, (int, slice, int, int, cell, cell, cell)) $msg) impure inline {
+    var ($self'seqno, $self'publicKey, $self'admin) = $self;
+    var ($msg'signature, $msg'seqno, $msg'valid_until, ($msg'message_parameters'bounce, $msg'message_parameters'to, $msg'message_parameters'value, $msg'message_parameters'mode, $msg'message_parameters'body, $msg'message_parameters'code, $msg'message_parameters'data)) = $msg;
+    int $hash = cell_hash(end_cell(store_ref(store_uint(store_uint(begin_cell(), $msg'seqno, 32), $msg'valid_until, 32), $SendParameters$_store_cell(($msg'message_parameters'bounce, $msg'message_parameters'to, $msg'message_parameters'value, $msg'message_parameters'mode, $msg'message_parameters'body, $msg'message_parameters'code, $msg'message_parameters'data)))));
+    throw_unless(9577, check_signature($hash, $msg'signature, $self'publicKey));
+    throw_unless(30508, ($msg'seqno == $self'seqno));
+    throw_unless(12033, (now() <= $msg'valid_until));
+    accept_message();
+    $self'seqno = ($self'seqno + 1);
+    $global_send(($msg'message_parameters'bounce, $msg'message_parameters'to, $msg'message_parameters'value, $msg'message_parameters'mode, $msg'message_parameters'body, $msg'message_parameters'code, $msg'message_parameters'data));
+    return (($self'seqno, $self'publicKey, $self'admin), ());
+}
+
+((int, int, slice), ()) $TactWallet$_internal_text_d444c32f9b395e87f1c1b3b67293318d7418509039e1ba5fe84d366e3dbf5614((int, int, slice) $self) impure inline {
+    var ($self'seqno, $self'publicKey, $self'admin) = $self;
+    var ($ctx'bounced, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
+    throw_unless(34370, ( __tact_slice_eq_bits($self'admin, $ctx'sender) ));
+    $global_send($SendParameters$_constructor_to_value_mode_body($self'admin, 0, (128 + 2), __gen_cell_comment_dbe1c797d6d2d914c463173b1da531103d2efe747471212d1fad170fcf0c75d2()));
+    return (($self'seqno, $self'publicKey, $self'admin), ());
+}
+
+;;
+;; Get methods of a Contract TactWallet
+;;
+
+_ %seqno() method_id(85143) {
+    var self = $TactWallet$_contract_load();
+    var res = self~$TactWallet$_fun_seqno();
+    return res;
+}
+
+_ %get_public_key() method_id(78748) {
+    var self = $TactWallet$_contract_load();
+    var res = self~$TactWallet$_fun_get_public_key();
+    return res;
+}
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.deploy.lazy.v0"H >> 128,
+        "org.ton.chain.workchain.v0"H >> 128
+    );
+}
+
+_ get_abi_ipfs() method_id {
+    return "ipfs://Qmcn9oSd4fvCCEv39gkY4rRyRsYagw1JjBZ8jKHnZyEBec";
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract TactWallet
+;;
+
+((int, int, slice), int) $TactWallet$_contract_router_internal((int, int, slice) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive empty message
+    if ((op == 0) & (slice_bits(in_msg) <= 32)) {
+        self~%$TactWallet$_internal_empty();
+        return (self, true);
+    }
+    
+    ;; Text Receivers
+    if (op == 0) {
+        var text_op = slice_hash(in_msg);
+        
+        ;; Receive "W" message
+        if (text_op == 0xd444c32f9b395e87f1c1b3b67293318d7418509039e1ba5fe84d366e3dbf5614) {
+            self~$TactWallet$_internal_text_d444c32f9b395e87f1c1b3b67293318d7418509039e1ba5fe84d366e3dbf5614();
+            return (self, true);
+        }
+        if (slice_bits(in_msg) >= 32) {
+            self~$TactWallet$_internal_any_text(in_msg.skip_bits(32));
+            return (self, true);
+        }
+    }
+    
+    ;; Receiver fallback
+    self~$TactWallet$_internal_any(in_msg);
+    return (self, true);
+}
+
+((int, int, slice), int) $TactWallet$_contract_router_external((int, int, slice) self, slice in_msg) impure inline_ref {
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive ExtMessage message
+    if (op == 3240438462) {
+        var msg = in_msg~$ExtMessage$_load();
+        self~$TactWallet$_external_binary_ExtMessage(msg);
+        return (self, true);
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $TactWallet$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$TactWallet$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $TactWallet$_contract_store(self);
+}
+
+() recv_external(slice in_msg) impure {
+    ;; Load contract data
+    var self = $TactWallet$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$TactWallet$_contract_router_external(in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(handled, 130);
+    
+    ;; Persist state
+    $TactWallet$_contract_store(self);
+}
