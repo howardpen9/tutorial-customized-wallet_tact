@@ -4,7 +4,7 @@
     "build": "tact --config ./tact.config.json",
     "test": "jest",
     "deploy": "ts-node ./sources/contract.deploy.ts",
-    "read": "ts-node ./sources/contract.read.ts"
+    "external": "ts-node ./sources/contract.External_Message.ts"
   },
   "dependencies": {
     "@orbs-network/ton-access": "^2.2.2",
