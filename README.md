@@ -13,7 +13,7 @@ yarn external # Send and executre the external message to contract
 
 This repo is dedicated to teach people how to create a new Wallet in TON. (Since all the wallet in TON is a contract). You can customized the wallet to any you want, especially to trigged the external message in here.
 
-這個代碼倉庫可以自己去延伸。就是示範外部訊息的操作方式。
+這個代碼倉庫可以自己去延伸。就是示範外部訊息的操作方式。需要透過私鑰。
 
 ## Process
 
