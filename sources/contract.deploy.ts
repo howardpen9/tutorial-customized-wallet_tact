@@ -15,7 +15,6 @@ import { TactWallet } from "./output/sample_TactWallet";
     let pair = await mnemonicToWalletKey(mnemonics);
 
     // ===== Parameters =====
-
     let owner = Address.parse("Your Address"); // 🌟 Replace owner with your address
 
     let init = await TactWallet.init(BigInt("0x" + pair.publicKey.toString("hex")), owner);

@@ -5,6 +5,8 @@ message ExtMessage {
     message_parameters: SendParameters;
 }
 
+
+
 contract TactWallet {
     seqno: Int as uint32 = 0;
     publicKey: Int as uint256;
@@ -14,9 +16,9 @@ contract TactWallet {
         self.publicKey = publicKey;
         self.admin = admin;
     }
-    // Public Key: only 1
 
     receive() {}
+
     receive(str: String) {
         send(SendParameters{
             to: self.admin, 
@@ -36,6 +38,7 @@ contract TactWallet {
     }
 
     external(msg: ExtMessage) {
+        require(msg.message_parameters.to == self.admin, "can only send message to the admin");
         let hash: Int = beginCell().storeUint(msg.seqno, 32).storeUint(msg.valid_until, 32).storeRef(msg.message_parameters.toCell()).endCell().hash();
 
         // Check the signature, make sure only the people who has the private key enable to sign the message

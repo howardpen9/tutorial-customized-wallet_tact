@@ -12,17 +12,18 @@ import { readFileSync } from "fs";
     let mnemonics = readFileSync("secret.txt").toString().split(",");
     let pair = mnemonicToWalletKey(mnemonics);
 
-    let owner = Address.parse("Your Address"); // 🌟🌟🌟
-    let new_receiver = Address.parse("ADDRESS"); // 🌟🌟🌟
+    let owner = Address.parse(""); // 🌟🌟🌟
+    let new_receiver = Address.parse(""); // 🌟🌟🌟
 
     let wallet = client4.open(await TactWallet.fromInit(BigInt("0x" + (await pair).publicKey.toString("hex")), owner));
     let params = fill_send_parameters(
         new_receiver, // New Receiver
-        toNano("0.05"),
+        toNano("0.000001"),
         beginCell().storeUint(0, 32).storeStringTail("Hello").endCell(),
         1n
     );
     await send_ext_message(wallet, (await pair).secretKey, BigInt((await client4.getLastBlock()).now + 20), params);
+    console.log("Send External Message Request: ", wallet.address);
     console.log("=== Transaction sent ===");
 })();
 

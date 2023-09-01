@@ -52,6 +52,7 @@
 (((int, int, slice)), ()) $TactWallet$_external_binary_ExtMessage((int, int, slice) $self, (slice, int, int, (int, slice, int, int, cell, cell, cell)) $msg) impure inline {
     var ($self'seqno, $self'publicKey, $self'admin) = $self;
     var ($msg'signature, $msg'seqno, $msg'valid_until, ($msg'message_parameters'bounce, $msg'message_parameters'to, $msg'message_parameters'value, $msg'message_parameters'mode, $msg'message_parameters'body, $msg'message_parameters'code, $msg'message_parameters'data)) = $msg;
+    throw_unless(11503, ( __tact_slice_eq_bits($self'admin, $msg'message_parameters'to) ));
     int $hash = cell_hash(end_cell(store_ref(store_uint(store_uint(begin_cell(), $msg'seqno, 32), $msg'valid_until, 32), $SendParameters$_store_cell(($msg'message_parameters'bounce, $msg'message_parameters'to, $msg'message_parameters'value, $msg'message_parameters'mode, $msg'message_parameters'body, $msg'message_parameters'code, $msg'message_parameters'data)))));
     throw_unless(9577, check_signature($hash, $msg'signature, $self'publicKey));
     throw_unless(30508, ($msg'seqno == $self'seqno));
@@ -96,7 +97,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://Qmcn9oSd4fvCCEv39gkY4rRyRsYagw1JjBZ8jKHnZyEBec";
+    return "ipfs://QmbFjYpoB6jnqKgEADi9eK8mXg4k7NhGjG7BTsH7H3isgK";
 }
 
 _ lazy_deployment_completed() method_id {
