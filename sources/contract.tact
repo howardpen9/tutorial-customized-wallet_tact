@@ -59,6 +59,7 @@ contract TactWallet {
     receive("W") {
         let ctx: Context = context();
         require(ctx.sender == self.admin, "Only admin can withdraw");
+        
         send(SendParameters{
             to: self.admin,
             value: 0,
