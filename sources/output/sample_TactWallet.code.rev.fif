@@ -9,16 +9,16 @@ PROGRAM{
   DECLPROC ?fun_ref_28ad176543cb9d9d;
   DECLPROC ?fun_ref_3b34ab287be19ac2;
   DECLPROC ?fun_ref_44086a5ce86162fe;
+  DECLPROC ?fun_ref_46a41967227a6fed;
   DECLPROC ?fun_ref_b2f99ae1a1dd4dfb;
   DECLPROC ?fun_ref_b93b9862cda1783c;
   DECLPROC ?fun_ref_cd29dd004f76b216;
   DECLPROC ?fun_ref_d9e4ce7890370f8d;
-  DECLPROC ?fun_ref_f342dc3057b92d51;
   DECLPROC ?fun_ref_f433db7c85b7782b;
   recv_external PROC:<{
     ?fun_ref_3b34ab287be19ac2 INLINECALLDICT
     1 3 BLKSWAP
-    ?fun_ref_f342dc3057b92d51 INLINECALLDICT
+    ?fun_ref_46a41967227a6fed INLINECALLDICT
     s0 POP
     NEWC
     3 GETGLOBVAR
@@ -138,7 +138,7 @@ PROGRAM{
     s0 s1 XCHG
   }>
   get_abi_ipfs PROC:<{
-    x{697066733A2F2F516D636E396F5364346676434345763339676B5934725279527359616777314A6A425A386A4B486E5A794542656382_} PUSHSLICE
+    x{697066733A2F2F516D62466A59706F42366A6E714B674541446939654B386D5867346B374E68476A4737425473483748336973674B82_} PUSHSLICE
   }>
   ?fun_ref_28ad176543cb9d9d PROCREF:<{
     s6 s7 XCHG2
@@ -272,6 +272,87 @@ PROGRAM{
   }>
   ?fun_ref_44086a5ce86162fe PROCREF:<{
     s1 PUSH
+  }>
+  ?fun_ref_46a41967227a6fed PROCREF:<{
+    0 PUSHINT
+    s1 PUSH
+    SBITS
+    31 GTINT
+    <{
+      s0 POP
+      s0 PUSH
+      32 PLDU
+    }> PUSHCONT
+    IF
+    3240438462 PUSHINT
+    EQUAL
+    <{
+      32 LDU
+      s0 s1 XCHG
+      3240438462 PUSHINT
+      EQUAL
+      129 THROWIFNOT
+      9 PUSHPOW2
+      LDSLICEX
+      32 LDU
+      32 LDU
+      LDREF
+      s0 s1 XCHG
+      CTOS
+      ?fun_ref_d9e4ce7890370f8d INLINECALLDICT
+      s7 POP
+      s7 s10 XCHG
+      s7 s9 XCHG
+      s7 s8 XCHG
+      1 6 BLKSWAP
+      1 10 BLKDROP2
+      11503 PUSHINT
+      s11 s6 PUSH2
+      SDEQ
+      THROWANYIFNOT
+      s8 PUSH
+      NEWC
+      32 STU
+      s8 s1 PUXC
+      32 STU
+      s7 s6 s5 PUSH3
+      s7 s6 s5 PUSH3
+      s7 PUSH
+      NEWC
+      7 1 BLKSWAP
+      ?fun_ref_28ad176543cb9d9d INLINECALLDICT
+      ENDC
+      s0 s1 XCHG
+      STREF
+      ENDC
+      HASHCU
+      9577 PUSHINT
+      s11 s13 XCPU
+      CHKSIGNU
+      s1 s10 XCHG
+      THROWANYIFNOT
+      30508 PUSHINT
+      s8 s12 XCPU
+      EQUAL
+      s1 s8 XCHG
+      THROWANYIFNOT
+      12033 PUSHINT
+      NOW
+      s0 s7 XCHG2
+      LEQ
+      s1 s6 XCHG
+      THROWANYIFNOT
+      ACCEPT
+      s0 s9 XCHG
+      INC
+      s3 s6 XCHG
+      s5 s1 s9 XCHG3
+      s4 s4 s3 XCHG3
+      ?fun_ref_b93b9862cda1783c INLINECALLDICT
+      -1 PUSHINT
+    }> IFJMPREF
+    s0 POP
+    0 PUSHINT
   }>
   ?fun_ref_b2f99ae1a1dd4dfb PROCREF:<{
     s2 PUSH
@@ -478,83 +559,6 @@ PROGRAM{
     }> PUSHCONT
     IFELSE
     7 1 BLKSWAP
-  }>
-  ?fun_ref_f342dc3057b92d51 PROCREF:<{
-    0 PUSHINT
-    s1 PUSH
-    SBITS
-    31 GTINT
-    <{
-      s0 POP
-      s0 PUSH
-      32 PLDU
-    }> PUSHCONT
-    IF
-    3240438462 PUSHINT
-    EQUAL
-    <{
-      32 LDU
-      s0 s1 XCHG
-      3240438462 PUSHINT
-      EQUAL
-      129 THROWIFNOT
-      9 PUSHPOW2
-      LDSLICEX
-      32 LDU
-      32 LDU
-      LDREF
-      s0 s1 XCHG
-      CTOS
-      ?fun_ref_d9e4ce7890370f8d INLINECALLDICT
-      s7 POP
-      s7 s10 XCHG
-      s7 s9 XCHG
-      s7 s8 XCHG
-      1 6 BLKSWAP
-      1 10 BLKDROP2
-      s8 PUSH
-      NEWC
-      32 STU
-      s8 s1 PUXC
-      32 STU
-      s7 s6 s5 PUSH3
-      s7 s6 s5 PUSH3
-      s7 PUSH
-      NEWC
-      7 1 BLKSWAP
-      ?fun_ref_28ad176543cb9d9d INLINECALLDICT
-      ENDC
-      s0 s1 XCHG
-      STREF
-      ENDC
-      HASHCU
-      9577 PUSHINT
-      s11 s13 XCPU
-      CHKSIGNU
-      s1 s10 XCHG
-      THROWANYIFNOT
-      30508 PUSHINT
-      s8 s12 XCPU
-      EQUAL
-      s1 s8 XCHG
-      THROWANYIFNOT
-      12033 PUSHINT
-      NOW
-      s0 s7 XCHG2
-      LEQ
-      s1 s6 XCHG
-      THROWANYIFNOT
-      ACCEPT
-      s0 s9 XCHG
-      INC
-      s3 s6 XCHG
-      s5 s1 s9 XCHG3
-      s4 s4 s3 XCHG3
-      ?fun_ref_b93b9862cda1783c INLINECALLDICT
-      -1 PUSHINT
-    }> IFJMPREF
-    s0 POP
-    0 PUSHINT
   }>
   ?fun_ref_f433db7c85b7782b PROCREF:<{
     2 SAVE

@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: TactWallet
-BOC Size: 1192 bytes
+BOC Size: 1201 bytes
 
 # Types
 Total Types: 4
@@ -54,6 +54,7 @@ Total Get Methods: 2
 136: Invalid address
 137: Masterchain support is not enabled for this contract
 9577: Invalid Signature
+11503: can only send message to the admin
 12033: Invalid Time
 30508: Invalid Seqno
 34370: Only admin can withdraw
